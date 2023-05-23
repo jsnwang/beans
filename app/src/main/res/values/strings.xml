@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">beans</string>
+    <string name="percentage"></string>
 </resources>
