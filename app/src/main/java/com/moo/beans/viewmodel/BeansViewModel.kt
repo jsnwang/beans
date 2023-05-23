@@ -1,11 +1,7 @@
 package com.moo.beans.viewmodel
 
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.moo.beans.BeansApplication
 import java.math.RoundingMode
 
 class BeansViewModel: ViewModel() {
