@@ -1,30 +1,63 @@
 package com.moo.beans.viewmodel
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import java.math.RoundingMode
 
-class BeansViewModel: ViewModel() {
-    val tip =  mutableStateOf("")
-    var total =  mutableStateOf("")
-    val percent =  mutableStateOf(15f)
+class BeansViewModel(private val dataStore: DataStore<Preferences>) : ViewModel() {
 
-//    fun setTotal(s: String) {
-//        total.value = s.toDouble()
-//    }
-//
-//    fun getTotal(): Double {
-//        return total.value
-//    }
+    private val _tip =  mutableStateOf("")
+    val tip: State<String> = _tip
+
+    private var _total =  mutableStateOf("")
+    var total: State<String> = _total
+
+    private val _percent =  mutableStateOf(15f)
+    val percent: State<Float> = _percent
+
+    private val _lock = mutableStateOf(false)
+    val lock: State<Boolean> = _lock
+
+    init {
+        viewModelScope.launch {
+            dataStore.data.collect { preferences ->
+                _percent.value = preferences[PreferencesKeys.TIP_PERCENT] ?: 15f
+                _lock.value = preferences[PreferencesKeys.LOCK] ?: false
+            }
+        }
+    }
+
+    fun lockorUnlock() {
+        _lock.value = !lock.value
+        saveLocked()
+    }
+    fun isLocked(): Boolean{
+        return lock.value
+    }
+
+    fun setTotal(s: String) {
+        _total.value = s
+    }
 
     fun getTipPercentage(): Float {
         return percent.value
     }
 
+    fun setTipPercentage(f: Float) {
+        _percent.value = f
+        savePercent()
+    }
+
     fun getTip(): String {
         return if (total.value > 0.toString()) {
             val calc = (total.value.toFloat().times(percent.value.div(100))).toBigDecimal()
-            tip.value = calc.setScale(2, RoundingMode.HALF_UP).toString()
+            _tip.value = calc.setScale(2, RoundingMode.HALF_UP).toString()
             return tip.value
         } else {
             "0"
@@ -38,4 +71,19 @@ class BeansViewModel: ViewModel() {
         }
     }
 
+    private fun saveLocked() {
+        viewModelScope.launch {
+            dataStore.edit { preferences ->
+                preferences[PreferencesKeys.LOCK] = lock.value
+            }
+        }
+    }
+
+    private fun savePercent() {
+        viewModelScope.launch {
+            dataStore.edit { preferences ->
+                preferences[PreferencesKeys.TIP_PERCENT] = percent.value
+            }
+        }
+    }
 }

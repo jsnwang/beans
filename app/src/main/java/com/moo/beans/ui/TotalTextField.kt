@@ -24,13 +24,13 @@ fun TotalTextField(viewModel: BeansViewModel) {
     TextField(
         modifier = Modifier
             .padding(8.dp)
-            .height(120.dp)
-            .width(280.dp),
+            .height(140.dp)
+            .width(300.dp),
         textStyle = TextStyle(fontSize = 64.sp, textAlign = TextAlign.Center),
         value = viewModel.total.value,
         onValueChange = {
-            if (it.all { char -> char.isDigit() || char == '.' })
-                viewModel.total.value = it
+            if (it.length <= 7 && it.all { char -> char.isDigit() || char == '.' })
+                viewModel.setTotal(it)
         },
         label = null,
         shape = ShapeDefaults.ExtraLarge,
