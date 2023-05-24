@@ -9,6 +9,15 @@ class BeansViewModel: ViewModel() {
     var total =  mutableStateOf("")
     val percent =  mutableStateOf(15f)
 
+    val lock = mutableStateOf(false)
+
+    fun lockorUnlock() {
+        lock.value = !lock.value
+    }
+    fun isLocked(): Boolean{
+        return lock.value
+    }
+
 //    fun setTotal(s: String) {
 //        total.value = s.toDouble()
 //    }
