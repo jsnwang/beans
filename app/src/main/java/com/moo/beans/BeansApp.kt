@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.moo.beans.ui.TotalTextField
@@ -62,7 +63,9 @@ fun BeansApp(viewModel: BeansViewModel) {
                     fontSize = 20.sp
                 )
             }
+            Text(text = stringResource(id = R.string.tip), fontSize = 30.sp)
             Text(text = viewModel.getTip(), fontSize = 48.sp)
+            Text(text = stringResource(id = R.string.total), fontSize = 30.sp)
             Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
         }
     }
