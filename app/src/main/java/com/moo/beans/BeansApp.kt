@@ -17,14 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.moo.beans.ui.TotalTextField
 import com.moo.beans.viewmodel.BeansViewModel
-import com.moo.beans.viewmodel.BeansViewModelFactory
 
 @Composable
-fun BeansApp() {
-    val viewModel: BeansViewModel = viewModel(factory = BeansViewModelFactory())
+fun BeansApp(viewModel: BeansViewModel) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -54,7 +51,7 @@ fun BeansApp() {
                         .padding(0.dp, 8.dp)
                         .fillMaxWidth(.85f),
                     value = viewModel.getTipPercentage(),
-                    onValueChange = { viewModel.percent.value = it },
+                    onValueChange = { viewModel.setTipPercentage(it) },
                     valueRange = (10f)..(20f),
                     steps = 9,
                     enabled = !viewModel.isLocked()

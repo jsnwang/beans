@@ -30,7 +30,7 @@ fun TotalTextField(viewModel: BeansViewModel) {
         value = viewModel.total.value,
         onValueChange = {
             if (it.length <= 7 && it.all { char -> char.isDigit() || char == '.' })
-                viewModel.total.value = it
+                viewModel.setTotal(it)
         },
         label = null,
         shape = ShapeDefaults.ExtraLarge,
