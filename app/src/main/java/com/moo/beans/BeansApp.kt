@@ -27,7 +27,7 @@ fun BeansApp(viewModel: BeansViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(8.dp, 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TotalTextField(viewModel = viewModel)
@@ -63,10 +63,14 @@ fun BeansApp(viewModel: BeansViewModel) {
                     fontSize = 20.sp
                 )
             }
-            Text(text = stringResource(id = R.string.tip), fontSize = 30.sp)
-            Text(text = viewModel.getTip(), fontSize = 48.sp)
-            Text(text = stringResource(id = R.string.total), fontSize = 30.sp)
-            Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
+            Column(modifier = Modifier.padding(0.dp, 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = stringResource(id = R.string.tip), fontSize = 30.sp,)
+                Text(text = viewModel.getTip(), fontSize = 48.sp)
+            }
+            Column(modifier = Modifier.padding(0.dp, 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = stringResource(id = R.string.total), fontSize = 30.sp)
+                Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
+            }
         }
     }
 }
