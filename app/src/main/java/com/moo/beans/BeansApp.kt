@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -68,13 +69,31 @@ fun BeansApp(viewModel: BeansViewModel) {
                     fontSize = 20.sp
                 )
             }
-            Column(modifier = Modifier.padding(0.dp, 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(id = R.string.tip).uppercase(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text(text = viewModel.getTip(), fontSize = 48.sp)
+            Column(
+                modifier = Modifier.padding(0.dp, 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.tip).uppercase(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                SelectionContainer() {
+                    Text(text = viewModel.getTip(), fontSize = 48.sp)
+                }
             }
-            Column(modifier = Modifier.padding(0.dp, 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(id = R.string.total).uppercase(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
+            Column(
+                modifier = Modifier.padding(0.dp, 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.total).uppercase(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                SelectionContainer() {
+                    Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
+                }
             }
         }
     }
