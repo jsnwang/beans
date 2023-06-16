@@ -20,17 +20,16 @@ import com.moo.beans.viewmodel.BeansViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TotalTextField(viewModel: BeansViewModel) {
+fun TotalTextField(value: String, onValueChange: (s: String) -> Unit) {
     TextField(
         modifier = Modifier
             .padding(8.dp)
             .height(140.dp)
             .width(300.dp),
         textStyle = TextStyle(fontSize = 64.sp, textAlign = TextAlign.Center),
-        value = viewModel.total.value,
+        value = value,
         onValueChange = {
-            if (it.length <= 7 && it.all { char -> char.isDigit() || char == '.' })
-                viewModel.setTotal(it)
+            onValueChange(it)
         },
         label = null,
         shape = ShapeDefaults.ExtraLarge,

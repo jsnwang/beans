@@ -19,10 +19,16 @@ class BeansViewModel(private val dataStore: DataStore<Preferences>) : ViewModel(
     var total: State<String> = _total
 
     private val _percent =  mutableStateOf(15f)
-    val percent: State<Float> = _percent
+    var percent: State<Float> = _percent
 
     private val _lock = mutableStateOf(false)
-    val lock: State<Boolean> = _lock
+    var lock: State<Boolean> = _lock
+
+    private val _people =  mutableStateOf("")
+    val people: State<String> = _people
+
+    private val _split =  mutableStateOf("")
+    val split: State<String> = _split
 
     init {
         viewModelScope.launch {
@@ -43,6 +49,9 @@ class BeansViewModel(private val dataStore: DataStore<Preferences>) : ViewModel(
 
     fun setTotal(s: String) {
         _total.value = s
+    }
+    fun setPeople(s: String) {
+        _people.value = s
     }
 
     fun getTipPercentage(): Float {
@@ -66,6 +75,15 @@ class BeansViewModel(private val dataStore: DataStore<Preferences>) : ViewModel(
     fun getTipPlusTotal(): String {
         return if (total.value > 0.toString() && tip.value > 0.toString()) {
             (total.value.toBigDecimal() + tip.value.toBigDecimal()).setScale(2, RoundingMode.HALF_UP).toString()
+        } else {
+            "0"
+        }
+    }
+
+    fun calcSplit(): String {
+        return if (total.value > 0.toString() && people.value > 0.toString()) {
+            _split.value = total.value.toFloat().div(people.value.toFloat()).toString()
+            split.value
         } else {
             "0"
         }

@@ -36,7 +36,10 @@ fun BeansApp(viewModel: BeansViewModel) {
                 .padding(8.dp, 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TotalTextField(viewModel = viewModel)
+            TotalTextField(viewModel.total.value) {
+                if (it.length <= 7 && it.all { char -> char.isDigit() || char == '.' })
+                    viewModel.setTotal(it)
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -95,6 +98,11 @@ fun BeansApp(viewModel: BeansViewModel) {
                     Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
                 }
             }
+        TotalTextField(viewModel.people.value) {
+            viewModel.setPeople(it)
+        }
+
+            Text(text = viewModel.calcSplit(), fontSize = 48.sp)
         }
     }
 }
