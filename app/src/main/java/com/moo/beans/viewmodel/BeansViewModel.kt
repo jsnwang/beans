@@ -48,7 +48,9 @@ class BeansViewModel(private val dataStore: DataStore<Preferences>) : ViewModel(
     }
 
     fun setTotal(s: String) {
-        _total.value = s
+        if (s.length <= 7 && s.all { char -> char.isDigit() || char == '.' }) {
+            _total.value = s
+        }
     }
     fun setPeople(s: String) {
         _people.value = s

@@ -27,9 +27,11 @@ import com.moo.beans.viewmodel.BeansViewModel
 
 @Composable
 fun BeansApp(viewModel: BeansViewModel) {
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -37,7 +39,6 @@ fun BeansApp(viewModel: BeansViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TotalTextField(viewModel.total.value) {
-                if (it.length <= 7 && it.all { char -> char.isDigit() || char == '.' })
                     viewModel.setTotal(it)
             }
             Row(
@@ -65,7 +66,7 @@ fun BeansApp(viewModel: BeansViewModel) {
                     valueRange = (10f)..(20f),
                     steps = 9,
                     enabled = !viewModel.isLocked()
-                    )
+                )
                 Text(
                     modifier = Modifier.padding(5.dp, 8.dp),
                     text = "${viewModel.getTipPercentage().toInt()}%",
@@ -98,11 +99,11 @@ fun BeansApp(viewModel: BeansViewModel) {
                     Text(text = viewModel.getTipPlusTotal(), fontSize = 48.sp)
                 }
             }
-        TotalTextField(viewModel.people.value) {
-            viewModel.setPeople(it)
-        }
-
-            Text(text = viewModel.calcSplit(), fontSize = 48.sp)
+//            TotalTextField(viewModel.people.value) {
+//                viewModel.setPeople(it)
+//            }
+//
+//            Text(text = viewModel.calcSplit(), fontSize = 48.sp)
         }
     }
 }
