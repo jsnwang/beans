@@ -3,23 +3,26 @@ package com.moo.beans
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.ViewModelProvider
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.moo.beans.data.SplitterRepository
+import com.moo.beans.data.ThemeRepository
 import com.moo.beans.ui.theme.BeansTheme
-import com.moo.beans.viewmodel.BeansViewModel
-import com.moo.beans.viewmodel.BeansViewModelFactory
+import com.moo.beans.viewmodel.beansViewModelFactory
 
 class MainActivity : ComponentActivity() {
-    private lateinit var viewModel: BeansViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val application = requireNotNull(this).application as BeansApplication
-        val viewModelFactory = BeansViewModelFactory(application.dataStore)
-        viewModel = ViewModelProvider(this, viewModelFactory)[BeansViewModel::class.java]
-
+        val dataStore = (application as BeansApplication).dataStore
+        val themeRepository = ThemeRepository(dataStore)
+        val splitterRepository = SplitterRepository(dataStore)
+        val factory = beansViewModelFactory(dataStore, themeRepository, splitterRepository)
         setContent {
-            BeansTheme {
-                BeansApp(viewModel)
+            val mode by themeRepository.mode.collectAsStateWithLifecycle(
+                initialValue = ThemeRepository.DEFAULT_MODE
+            )
+            BeansTheme(mode = mode) {
+                BeansApp(factory)
             }
         }
     }

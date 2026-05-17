@@ -1,0 +1,24 @@
+name: iosApp
+options:
+  bundleIdPrefix: com.moo.beans
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iosApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.moo.beans
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_FILE: iosApp/Info.plist
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        SWIFT_VERSION: "5.0"
+    info:
+      path: iosApp/Info.plist
+      properties:
+        NSCameraUsageDescription: Beans uses the camera to scan receipts and pre-fill split items.
